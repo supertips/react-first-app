@@ -1,11 +1,11 @@
-import React from "react";
-import "./card-list.styles.scss";
-import { Card } from "../card/card.component";
+import React from 'react'
+import './card-list.style.scss'
+import { Card } from '../card/card.component'
 
 export const CardList = props => (
   <div className="card-list">
-    {props.posts.map(post => (
-      <Card id={post.id} key={post.id} title={post.title} />
+    {props.users.map(user => (
+      <Card id={user.id} key={user.id} title={user.name} />
     ))}
   </div>
-);
+)

@@ -1,30 +1,47 @@
-import React, { Component } from "react";
-import "./App.css";
-import { CardList } from "./components/card-list/card-list.component";
+import React, { Component } from 'react'
+import './App.css'
+import { CardList } from './components/card-list/card-list.component'
+import { SearchBox } from './components/search-box/search-box.component'
 
 class App extends Component {
   constructor() {
-    super();
+    super()
 
     this.state = {
-      posts: []
-    };
+      users: [],
+      searchTerm: '',
+    }
   }
 
   async componentDidMount() {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const posts = await response.json();
+    const response = await fetch('https://jsonplaceholder.typicode.com/users')
+    const users = await response.json()
 
-    this.setState({ posts });
+    this.setState({ users })
   }
 
   render() {
+    const { searchTerm, users } = this.state
+    const filteredUsers = users.filter(user =>
+      user.name.toLowerCase().includes(searchTerm)
+    )
+
     return (
       <div className="App">
-        <CardList posts={this.state.posts} />
+        <h1>Fancy Users :)</h1>
+        <SearchBox
+          placeholder="search users here"
+          onChange={e => {
+            const value = e.target.value
+            this.setState({ searchTerm: value }, () =>
+              console.log('Updating searchtearm with', this.state.searchTerm)
+            )
+          }}
+        />
+        <CardList users={filteredUsers} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
